@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionnaireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,11 @@ Route::get('/questionnaires', [QuestionnaireController::class, 'index']);
 // Routing Group for questionnaire create,store,delete,update
 Route::prefix('/questionnaire')->group( function () {
     Route::post('/store', [QuestionnaireController::class, 'store']);
-
+    Route::get('/{questionnaire}', [QuestionnaireController::class, 'show']);
+    
 
 });
+
+// Routing for questions
+Route::post('/question/store', [QuestionController::class, 'store']);
 

@@ -10,7 +10,7 @@ class Questionnaire extends Model
     use HasFactory;
 
     // Turn on  mass fillable
-    protected $guarded = [];
+    protected $fillable = ['title'];
 
 
     // Relationships

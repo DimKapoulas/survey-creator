@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 
 class QuestionnaireController extends Controller
 {
-    // Retrieve all existing questionnaires
+    // Retrieve all questionnaires starting from latest
     public function index()
     {
-        return new QuestionnaireCollection(Questionnaire::all());
+        $questionnaires = Questionnaire::orderBy('created_at', 'DESC')->get();
+        return new QuestionnaireCollection($questionnaires);
 
     }
 
@@ -27,7 +28,13 @@ class QuestionnaireController extends Controller
                 ->setStatusCode(201);
     }
 
-    // Validate user input. Title is mandatory and string.
+    // Show detail of specific questionnaire
+    public function show (Questionnaire $questionnaire)
+    {
+        return new QuestionnaireResource($questionnaire);
+    }
+
+    // Validate input. Title is a string and mandatory
     protected function validatedData()
     {
         return request()->validate([
