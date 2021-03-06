@@ -23,14 +23,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Routes for indexing questionnaires
 Route::get('/questionnaires', [QuestionnaireController::class, 'index']);
 
-// Routing Group for questionnaire create,store,delete,update
+// Routing Group for questionnaire
 Route::prefix('/questionnaire')->group( function () {
     Route::post('/store', [QuestionnaireController::class, 'store']);
     Route::get('/{questionnaire}', [QuestionnaireController::class, 'show']);
+    Route::get('/{questionnaire}/edit', [QuestionnaireController::class, 'edit']);
     
 
 });
 
-// Routing for questions
-Route::post('/question/store', [QuestionController::class, 'store']);
+// Routing Group for questions
+Route::prefix('/questionnaire/{questionnaire}/question')->group( function () {
+    Route::post('/store', [QuestionController::class, 'store']);
+    Route::put('/{question}', [QuestionController::class, 'update']);
+
+    
+});
+
 
