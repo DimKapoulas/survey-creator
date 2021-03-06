@@ -22,9 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Routes for indexing questionnaires
 Route::get('/questionnaires', [QuestionnaireController::class, 'index']);
 
-// Group Routing for questionnaire create,store,delete,update
-Route::prefix('/questionaire')->group( function () {
-    Route::get('/create', [QuestionnaireController::class, 'create']);
+// Routing Group for questionnaire create,store,delete,update
+Route::prefix('/questionnaire')->group( function () {
+    Route::post('/store', [QuestionnaireController::class, 'store']);
 
 
 });

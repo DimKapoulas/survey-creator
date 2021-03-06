@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Questionnaire;
 use App\Http\Resources\QuestionnaireCollection;
+use App\Http\Resources\QuestionnaireResource;
 use Illuminate\Http\Request;
 
 class QuestionnaireController extends Controller
@@ -15,10 +16,23 @@ class QuestionnaireController extends Controller
 
     }
 
-    // Create a new questionnaire
-    public function create()
+    // Store a new questionnaire
+    public function store()
     {
-        // TODO: make a create view form vue.js
-        return 'Hello from inside create()';
+        $data = $this->validatedData();
+        $questionnaire = Questionnaire::create($data);
+
+        return (new QuestionnaireResource($questionnaire))
+                ->response()
+                ->setStatusCode(201);
     }
+
+    // Validate user input. Title is mandatory and string.
+    protected function validatedData()
+    {
+        return request()->validate([
+            'title' => 'required|string'
+        ]);
+    }
+
 }
