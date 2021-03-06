@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QuestionnaireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Routes for indexing questionnaires
+Route::get('/questionnaires', [QuestionnaireController::class, 'index']);
+
+// Group Routing for questionnaire create,store,delete,update
+Route::prefix('/questionaire')->group( function () {
+    Route::get('/create', [QuestionnaireController::class, 'create']);
+
+
+});
+
