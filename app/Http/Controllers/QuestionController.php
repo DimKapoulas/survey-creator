@@ -28,6 +28,16 @@ class QuestionController extends Controller
                 ->setStatusCode(201);
     }
 
+    public function destroy(Questionnaire $questionnaire, Question $question)
+    {
+        // First cascade delete on related answers
+        // then delete the question itself
+        $question->answers()->delete();
+        $question->delete();
+        
+        return response()->json(null, 204);
+    }
+
 
     // Validate input. Question is string and mandatory.
     protected function validateQuestion()

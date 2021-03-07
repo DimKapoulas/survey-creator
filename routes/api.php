@@ -40,6 +40,7 @@ Route::prefix('/questionnaires/{questionnaire}/questions')->group( function () {
     Route::get('/', [QuestionController::class, 'index']);
     Route::post('/store', [QuestionController::class, 'store']);
     Route::put('/{question}', [QuestionController::class, 'update']);
+    Route::delete('/{question}', [QuestionController::class, 'destroy']);
 
 });
 

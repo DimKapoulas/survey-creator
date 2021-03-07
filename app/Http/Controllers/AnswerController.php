@@ -38,7 +38,6 @@ class AnswerController extends Controller
     // Delete a specific answer
     public function destroy(Question $question, Answer $answer)
     {
-        // $answer = request()->get;
         $answer->delete();
         
         return response()->json(null, 204);
