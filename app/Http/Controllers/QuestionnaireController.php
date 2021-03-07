@@ -21,7 +21,7 @@ class QuestionnaireController extends Controller
     // Store a new questionnaire
     public function store()
     {
-        $data = $this->validatedData();
+        $data = $this->validateQuestionnaire();
         $questionnaire = Questionnaire::create($data);
 
         return (new QuestionnaireResource($questionnaire))
@@ -32,29 +32,37 @@ class QuestionnaireController extends Controller
     // Show detail of specific questionnaire
     public function show (Questionnaire $questionnaire)
     {        
-        $questions = $questionnaire->questions()->get();
-        $questions_list = [];
-
-        // Iterate questions, grab question text
-        for($i=0; $i < count($questions); $i++) {
-            array_push($questions_list, $questions[$i]->question);
-        }
         
-        // Same for answers
-            #TODO: fetch ansers into an array
-
-        $details = [
-            'title' => $questionnaire->title,
-            'questions' => $questions_list,
-        ];
+        return new QuestionnaireResource($questionnaire);
         
-        return new QuestionnaireResource($details);
+        
+        /**Second approach 
+            fetch everythin from questinons and answers
+            and put them together in a single object 
+        */
+        // $questions = $questionnaire->questions()->get();
+        // $questions_list = [];
+
+        // // Iterate questions, grab question text
+        // for($i=0; $i < count($questions); $i++) {
+        //     array_push($questions_list, $questions[$i]->question);
+        // }
+        
+        // // Same for answers
+        //     #TODO: fetch ansers into an array
+
+        // $details = [
+        //     'title' => $questionnaire->title,
+        //     'questions' => $questions_list,
+        // ];
+        
+        // return new QuestionnaireResource($details);
     }
 
 
 
     // Validate input. Title is a string and mandatory
-    protected function validatedData()
+    protected function validateQuestionnaire()
     {
         return request()->validate([
             'title' => 'required|string'

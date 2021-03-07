@@ -20,7 +20,7 @@ class QuestionController extends Controller
     // Storing a new question
     public function store(Questionnaire $questionnaire)
     {
-        $data = $this->validatedData();
+        $data = $this->validateQuestion();
         $question =  $questionnaire->questions()->create($data);
         
         return new QuestionResource($question);
@@ -28,7 +28,7 @@ class QuestionController extends Controller
 
 
     // Validate input. Question is string and mandatory.
-    protected function validatedData()
+    protected function validateQuestion()
     {
         return request()->validate([
             'question' => 'required|string'

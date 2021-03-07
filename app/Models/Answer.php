@@ -9,6 +9,9 @@ class Answer extends Model
 {
     use HasFactory;
 
+    // Turn on mass assignment
+    protected $fillable = ['answer', 'question_id'];
+
     // Relationships
     public function question()
     {
