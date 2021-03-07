@@ -10,10 +10,14 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    // List all questions
+    // List all questions and their corresponding answers
     public function index()
     {
-        return new QuestionCollection(Question::get());
+        $data = Question::with('answers')->get();
+        
+        return (new QuestionCollection($data))
+                ->response()
+                ->setStatuscode(200);
     }
 
 
@@ -28,15 +32,20 @@ class QuestionController extends Controller
                 ->setStatusCode(201);
     }
 
-    // Return detail about specific question and associated answers
+    // Return detail about specific question
     public function show(Questionnaire $questionnaire, Question $question)
     {
-        $data = Question::with('answers')->get();
-        
-        return response()->json($data);
+        return new QuestionResource($question);
     }
 
-    // Update a 
+    // Update a question
+    public function update(Questionnaire $questionnaire, Question $question)
+    {
+        $question->update(request()->all());
+        return (new QuestionResource($question))
+                ->response()
+                ->setStatusCode(200);
+    }
 
 
     public function destroy(Questionnaire $questionnaire, Question $question)
