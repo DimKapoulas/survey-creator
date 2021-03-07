@@ -35,7 +35,7 @@ class AnswerController extends Controller
 
     public function update(Question $question, Answer $answer)
     {
-    
+        $this->validateAnswer();
         $answer->update(request()->all());
         return (new AnswerResource($answer))
                 ->response()
@@ -51,7 +51,7 @@ class AnswerController extends Controller
     }
 
 
-    // Validate input. Question is string and mandatory.
+    // Validate input or redirect
     protected function validateAnswer()
     {
         return request()->validate([

@@ -21,7 +21,7 @@ class QuestionnaireController extends Controller
     // Store a new questionnaire
     public function store()
     {
-        $data = $this->validateQuestionnaire();
+        $data = $this->validateTitle();
         $questionnaire = Questionnaire::create($data);
 
         return (new QuestionnaireResource($questionnaire))
@@ -29,7 +29,7 @@ class QuestionnaireController extends Controller
                 ->setStatusCode(201);
     }
 
-    // Show details of specific questionnaire
+    // Show details of specific questionnaire as a whole
     public function show (Questionnaire $questionnaire)
     {        
         $question_answer_pair = Question::with('answers')->get();
@@ -46,9 +46,13 @@ class QuestionnaireController extends Controller
 
     }
 
-    public function update(Request $request)
+    public function update(Questionnaire $questionnaire)
     {
-        return $request->getContent();
+        $this->validateTitle();
+        $questionnaire->update(request()->all());
+        return (new QuestionnaireResource($questionnaire))
+                ->response()
+                ->setStatusCode(200);
     }
 
 
@@ -57,8 +61,7 @@ class QuestionnaireController extends Controller
     {
 
         // Cascade delete on related answers (with ManyThrough())
-        // then on related the questions
-        // then itself
+        // then on related the question,then itself
         $questionnaire->answers()->delete();
         $questionnaire->questions()->delete();
         $questionnaire->delete();
@@ -67,10 +70,8 @@ class QuestionnaireController extends Controller
     }
 
 
-
-
-    // Validate input. Title is a string and mandatory
-    protected function validateQuestionnaire()
+    // Validate or redirect
+    protected function validateTitle()
     {
         return request()->validate([
             'title' => 'required|string'

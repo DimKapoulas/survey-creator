@@ -41,6 +41,7 @@ class QuestionController extends Controller
     // Update a question
     public function update(Questionnaire $questionnaire, Question $question)
     {
+        $this->validateQuestion();
         $question->update(request()->all());
         return (new QuestionResource($question))
                 ->response()
@@ -59,7 +60,7 @@ class QuestionController extends Controller
     }
 
 
-    // Validate input. Question is string and mandatory.
+    // Validate input or redirect
     protected function validateQuestion()
     {
         return request()->validate([
