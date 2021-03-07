@@ -60,6 +60,21 @@ class QuestionnaireController extends Controller
         */
     }
 
+    // Delete a questionnaire and its related content
+    public function destroy(Questionnaire $questionnaire)
+    {
+
+        // First cascade delete on related answers
+        // then on related the questions
+        // then itself
+        $questionnaire->answers()->delete();
+        $questionnaire->questions()->delete();
+        $questionnaire->delete();
+
+        return response()->json(null, 204);
+    }
+
+
 
 
     // Validate input. Title is a string and mandatory

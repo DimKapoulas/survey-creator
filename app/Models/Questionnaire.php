@@ -18,4 +18,9 @@ class Questionnaire extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function answers()
+    {
+        return $this->hasManyThrough(Answer::class, Question::class);
+    }
 }

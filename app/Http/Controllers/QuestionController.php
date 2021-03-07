@@ -34,7 +34,7 @@ class QuestionController extends Controller
         // then delete the question itself
         $question->answers()->delete();
         $question->delete();
-        
+            
         return response()->json(null, 204);
     }
 
