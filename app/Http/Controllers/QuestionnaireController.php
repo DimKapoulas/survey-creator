@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Http\Resources\QuestionnaireCollection;
 use App\Http\Resources\QuestionnaireResource;
@@ -30,9 +31,27 @@ class QuestionnaireController extends Controller
 
     // Show detail of specific questionnaire
     public function show (Questionnaire $questionnaire)
-    {
-        return new QuestionnaireResource($questionnaire);
+    {        
+        $questions = $questionnaire->questions()->get();
+        $questions_list = [];
+
+        // Iterate questions, grab question text
+        for($i=0; $i < count($questions); $i++) {
+            array_push($questions_list, $questions[$i]->question);
+        }
+        
+        // Same for answers
+            #TODO: fetch ansers into an array
+
+        $details = [
+            'title' => $questionnaire->title,
+            'questions' => $questions_list,
+        ];
+        
+        return new QuestionnaireResource($details);
     }
+
+
 
     // Validate input. Title is a string and mandatory
     protected function validatedData()
