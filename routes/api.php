@@ -21,23 +21,26 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Routes for indexing questionnaires
-Route::get('/questionnaires', [QuestionnaireController::class, 'index']);
+// Route::get('/questionnaires', [QuestionnaireController::class, 'index']);
 
 // Routing Group for questionnaire
-Route::prefix('/questionnaire')->group( function () {
+Route::prefix('/questionnaires')->group( function () {
+    Route::get('/', [QuestionnaireController::class, 'index']);
     Route::post('/store', [QuestionnaireController::class, 'store']);
     Route::get('/{questionnaire}', [QuestionnaireController::class, 'show']);
-    Route::delete('/{questionnaire}', [QuestionnaireController::class, 'destroy']);
+    //Route::delete('/{questionnaire}', [QuestionnaireController::class, 'destroy']);
     
 
 });
 
 // Routing Group for questions
-Route::prefix('/questionnaire/{questionnaire}/question')->group( function () {
+Route::prefix('/questionnaires/{questionnaire}/questions')->group( function () {
+    Route::get('/', [QuestionController::class, 'index']);
     Route::post('/store', [QuestionController::class, 'store']);
     Route::put('/{question}', [QuestionController::class, 'update']);
 
-    
 });
+
+Route::get('/questions', [QuestionController::class, 'index']);
 
 
