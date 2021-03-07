@@ -10,7 +10,7 @@ class Question extends Model
     use HasFactory;
 
     // Turn on mass fillable
-    protected $fillable = ['title'];
+    protected $fillable = ['question'];
 
     // Relationships
     public function questionnaire()

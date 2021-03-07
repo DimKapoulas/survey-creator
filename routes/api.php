@@ -27,7 +27,7 @@ Route::get('/questionnaires', [QuestionnaireController::class, 'index']);
 Route::prefix('/questionnaire')->group( function () {
     Route::post('/store', [QuestionnaireController::class, 'store']);
     Route::get('/{questionnaire}', [QuestionnaireController::class, 'show']);
-    Route::get('/{questionnaire}/edit', [QuestionnaireController::class, 'edit']);
+    Route::delete('/{questionnaire}', [QuestionnaireController::class, 'destroy']);
     
 
 });
