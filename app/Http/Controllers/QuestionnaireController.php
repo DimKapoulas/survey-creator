@@ -39,24 +39,25 @@ class QuestionnaireController extends Controller
         /**Second approach 
             fetch everythin from questinons and answers
             and put them together in a single object 
+        
+        $questions = $questionnaire->questions()->get();
+        $questions_list = [];
+
+        // Iterate questions, grab question text
+        for($i=0; $i < count($questions); $i++) {
+            array_push($questions_list, $questions[$i]->question);
+        }
+        
+        // Same for answers
+            #TODO: fetch ansers into an array
+
+        $details = [
+            'title' => $questionnaire->title,
+            'questions' => $questions_list,
+        ];
+        
+        return new QuestionnaireResource($details);
         */
-        // $questions = $questionnaire->questions()->get();
-        // $questions_list = [];
-
-        // // Iterate questions, grab question text
-        // for($i=0; $i < count($questions); $i++) {
-        //     array_push($questions_list, $questions[$i]->question);
-        // }
-        
-        // // Same for answers
-        //     #TODO: fetch ansers into an array
-
-        // $details = [
-        //     'title' => $questionnaire->title,
-        //     'questions' => $questions_list,
-        // ];
-        
-        // return new QuestionnaireResource($details);
     }
 
 

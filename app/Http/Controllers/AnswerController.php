@@ -28,9 +28,20 @@ class AnswerController extends Controller
     public function store(Question $question)
     {
         $data = $this->validateAnswer();
-
         $answer = $question->answers()->create($data);
-        return new AnswerResource($answer);
+
+        return (new AnswerResource($answer))
+                    ->response()
+                    ->setStatusCode(201);
+    }
+
+    // Delete a specific answer
+    public function destroy(Question $question, Answer $answer)
+    {
+        // $answer = request()->get;
+        $answer->delete();
+        
+        return response()->json(null, 204);
     }
 
     

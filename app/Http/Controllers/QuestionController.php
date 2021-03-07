@@ -23,7 +23,9 @@ class QuestionController extends Controller
         $data = $this->validateQuestion();
         $question =  $questionnaire->questions()->create($data);
         
-        return new QuestionResource($question);
+        return (new QuestionResource($question))
+                ->response()
+                ->setStatusCode(201);
     }
 
 

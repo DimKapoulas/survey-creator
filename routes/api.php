@@ -46,9 +46,10 @@ Route::prefix('/questionnaires/{questionnaire}/questions')->group( function () {
 // Testing route for listin ALL answers. TODO: delete this when done
 Route::get('/answers', [AnswerController::class, 'indexAll']);
 
-// Routing Group for questions
+// Routing Group for answers
 Route::prefix('/questions/{question}/answers')->group( function () {
     Route::get('/', [AnswerController::class, 'index']);
     Route::post('/store', [AnswerController::class, 'store']);
+    Route::delete('/{answer}', [AnswerController::class, 'destroy']);
 
 });
