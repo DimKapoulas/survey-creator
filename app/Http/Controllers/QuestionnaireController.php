@@ -29,42 +29,27 @@ class QuestionnaireController extends Controller
                 ->setStatusCode(201);
     }
 
-    // Show detail of specific questionnaire
+    // Show details of specific questionnaire
     public function show (Questionnaire $questionnaire)
     {        
-        
-        return new QuestionnaireResource($questionnaire);
-        
-        
-        /**Second approach 
-            fetch everythin from questinons and answers
-            and put them together in a single object 
-        
-        $questions = $questionnaire->questions()->get();
-        $questions_list = [];
+        $question_answer_pair = Question::with('answers')->get();
+        $title = $questionnaire->title;
 
-        // Iterate questions, grab question text
-        for($i=0; $i < count($questions); $i++) {
-            array_push($questions_list, $questions[$i]->question);
-        }
-        
-        // Same for answers
-            #TODO: fetch ansers into an array
-
-        $details = [
-            'title' => $questionnaire->title,
-            'questions' => $questions_list,
+        $data = [
+            'title' => $title,
+            'questions' => $question_answer_pair,
         ];
-        
-        return new QuestionnaireResource($details);
-        */
+
+        return response()->json($data, 200);
+
     }
+
 
     // Delete a questionnaire and its related content
     public function destroy(Questionnaire $questionnaire)
     {
 
-        // First cascade delete on related answers
+        // Cascade delete on related answers (with ManyThrough())
         // then on related the questions
         // then itself
         $questionnaire->answers()->delete();
