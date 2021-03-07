@@ -30,6 +30,7 @@ Route::prefix('/questionnaires')->group( function () {
     Route::get('/', [QuestionnaireController::class, 'index']);
     Route::post('/store', [QuestionnaireController::class, 'store']);
     Route::get('/{questionnaire}', [QuestionnaireController::class, 'show']);
+    Route::put('/{questionnaire}', [QuestionnaireController::class, 'update']);
     Route::delete('/{questionnaire}', [QuestionnaireController::class, 'destroy']);
     
 
@@ -39,19 +40,18 @@ Route::prefix('/questionnaires')->group( function () {
 Route::prefix('/questionnaires/{questionnaire}/questions')->group( function () {
     Route::get('/', [QuestionController::class, 'index']);
     Route::post('/store', [QuestionController::class, 'store']);
-    Route::get('/{question}', [Question::class, 'show']);
+    Route::get('/{question}', [QuestionController::class, 'show']);
     Route::put('/{question}', [QuestionController::class, 'update']);
     Route::delete('/{question}', [QuestionController::class, 'destroy']);
 
 });
 
-// Testing route for listin ALL answers. TODO: delete this when done
-Route::get('/answers', [AnswerController::class, 'indexAll']);
-
 // Routing Group for answers
 Route::prefix('/questions/{question}/answers')->group( function () {
     Route::get('/', [AnswerController::class, 'index']);
     Route::post('/store', [AnswerController::class, 'store']);
+    Route::get('/{answer}', [AnswerController::class, 'show']);
+    Route::put('/{answer}', [AnswerController::class, 'update']);
     Route::delete('/{answer}', [AnswerController::class, 'destroy']);
 
 });

@@ -14,8 +14,8 @@ class QuestionnaireController extends Controller
     public function index()
     {
         $questionnaires = Questionnaire::orderBy('created_at', 'DESC')->get();
-        return new QuestionnaireCollection($questionnaires);
 
+        return new QuestionnaireCollection($questionnaires);
     }
 
     // Store a new questionnaire
@@ -34,14 +34,21 @@ class QuestionnaireController extends Controller
     {        
         $question_answer_pair = Question::with('answers')->get();
         $title = $questionnaire->title;
+        $id = $questionnaire->id;
 
         $data = [
+            'id' => $id,
             'title' => $title,
             'questions' => $question_answer_pair,
         ];
 
         return response()->json($data, 200);
 
+    }
+
+    public function update(Request $request)
+    {
+        return $request->getContent();
     }
 
 

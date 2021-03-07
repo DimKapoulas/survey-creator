@@ -28,13 +28,24 @@ class QuestionController extends Controller
                 ->setStatusCode(201);
     }
 
+    // Return detail about specific question and associated answers
+    public function show(Questionnaire $questionnaire, Question $question)
+    {
+        $data = Question::with('answers')->get();
+        
+        return response()->json($data);
+    }
+
+    // Update a 
+
+
     public function destroy(Questionnaire $questionnaire, Question $question)
     {
         // First cascade delete on related answers
         // then delete the question itself
         $question->answers()->delete();
         $question->delete();
-            
+
         return response()->json(null, 204);
     }
 
