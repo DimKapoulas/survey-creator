@@ -51,7 +51,7 @@ export default {
 }
 
 .heading {
-    background: #e6e6e6;
+    background: #4da18f;
     padding: 10px;
 
 }

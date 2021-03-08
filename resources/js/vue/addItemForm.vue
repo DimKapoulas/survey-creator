@@ -63,7 +63,7 @@ input {
 }
 
 .active {
-    color: #00ce25;
+    color: #3adf58;
 }
 
 .inactive {

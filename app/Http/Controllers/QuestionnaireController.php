@@ -31,8 +31,9 @@ class QuestionnaireController extends Controller
 
     // Show details of specific questionnaire as a whole
     public function show (Questionnaire $questionnaire)
-    {        
-        $question_answer_pair = Question::with('answers')->get();
+    {       
+        $question = $questionnaire->questions() ;
+        $question_answer_pair = $question->with('answers')->get();
         $title = $questionnaire->title;
         $id = $questionnaire->id;
 
