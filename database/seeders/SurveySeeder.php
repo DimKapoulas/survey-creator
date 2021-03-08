@@ -26,11 +26,10 @@ class SurveySeeder extends Seeder
         $questionnaire  = Questionnaire::create([
             'title' => 'Covid-19'
         ]);
-        // First question for first survey
         $question = $questionnaire->questions()->create([
             'question' => 'Did you suffer from the virus?'
         ]);
-        // Related answers
+        
         $question->answers()->create([
             'answer' => 'Yes'
         ]);
