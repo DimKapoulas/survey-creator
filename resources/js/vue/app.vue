@@ -7,7 +7,7 @@
                 />
         </div>
         <list-view
-            :items="items"
+            :questionnaires="questionnaires"
             v-on:reloadlist="getList()" />
     </div>
 </template>
@@ -23,14 +23,14 @@ export default {
     },
     data: function () {
         return {
-            items: []
+            questionnaires: []
         }
     },
     methods: {
         getList () {
-            axios.get('api/items')
+            axios.get('api/questionnaires/')
             .then( response => {
-                this.items = response.data
+                this.questionnaires = response.data
             })
             .catch( error => {
                 console.log( error );
@@ -44,20 +44,13 @@ export default {
 }
 </script>
 
-<style scoped>
-.todoListContainer {
-    width: 350px;
-    margin: auto;
-}
-
-.heading {
-    background: #4da18f;
-    padding: 10px;
-
-}
-
-#title {
-    text-align: center;
-
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
