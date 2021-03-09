@@ -1,56 +1,86 @@
 <template>
-    <div class="todoListContainer">
-        <div class="heading">
-            <h2 id="title">Survey Creator</h2>
-            <add-item-form 
-                v-on:reloadlist="getList()"
-                />
-        </div>
-        <list-view
-            :questionnaires="questionnaires"
-            v-on:reloadlist="getList()" />
-    </div>
+<div class="container">
+    <Header  title="Survey Creator"/>
+    <!--TODO: toggleable add form  -->
+
+    <List-Surveys :surveys="surveys"/>
+</div>
+    
 </template>
 
 <script>
-import addItemForm from "./addItemForm"
-import listView from "./listView"
+import Header from './Header'
+import ListSurveys from './ListSurveys'
 
 export default {
     components: {
-        addItemForm,
-        listView
+        Header,
+        ListSurveys
     },
-    data: function () {
+    data() {
         return {
-            questionnaires: []
+            surveys: []
         }
     },
     methods: {
-        getList () {
-            axios.get('api/questionnaires/')
+        getSurveys() {
+            axios.get('/api/questionnaires/')
             .then( response => {
-                this.questionnaires = response.data
+                this.surveys = response.data
             })
             .catch( error => {
                 console.log( error );
             })
-
         }
+
     },
     created() {
-        this.getList();
+        this.getSurveys();
     }
+    
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+}
+.container {
+  max-width: 500px;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 300px;
+  border: 1px solid steelblue;
+  padding: 30px;
+  border-radius: 5px;
+}
+.btn {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: inherit;
+}
+.btn:focus {
+  outline: none;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn-block {
+  display: block;
+  width: 100%;
 }
 </style>
