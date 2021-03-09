@@ -12,9 +12,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faPlusSquare, faTrash)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('modal', require('./vue/ModalComponent.vue'));
 
 
-var app = new Vue({
+const app = new Vue({
     el: '#app',
-    components: { App }
+    components: { App },
+    data: {
+        showModal: false
+    }
 })

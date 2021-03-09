@@ -3,7 +3,8 @@
     <Header  title="Survey Creator"/>
     <!--TODO: toggleable add form  -->
 
-    <List-Surveys :surveys="surveys"/>
+    <List-Surveys :surveys="surveys"
+    @reloadlist="getSurveys()"/>
 </div>
     
 </template>
