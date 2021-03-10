@@ -16,56 +16,45 @@ class QuestionnaireController extends Controller
     {
         // $questionnaires = Questionnaire::orderBy('created_at', 'DESC')->get();
         $questionnaires = Questionnaire::all();
-        // $questionnaires = Questionnaire::find(1);
-        // echo gettype($questionnaires[0]->id);
+        
+        // Init auxiliary arrays
         $survey = [];
         $data = [];
         $content = [];
+
+        // For every questionnaire fetch its related questions
         foreach($questionnaires as $questionnaire) {
             $questions = $questionnaire->questions()->get();
-            // echo $questions;
-            // echo "\n\n\n";
-            // break;
 
+            // For each of these questions, fetch its related answers
             foreach($questions as $question) {
-                // echo $question->question;
-                echo "\n\n\n\n";
-                
+                // Similar to "question A: ans1, ans2, ... etc"
                 $question_answers_pair = $question->with('answers')
                                                    ->where('id','=',$question->id)
                                                    ->get();
-                // echo $pairs;
-                // dd($pairs);
+                
+                // Gather each pair
                 $content[] = $question_answers_pair;
                 
             }
 
+            // Create survey
             $survey = [
                 'id' => $questionnaire->id,
                 'title' => $questionnaire->title,
                 'questions' => $content,
+                // 'questions' => $question_answers_pair
             ];
-            
-            // return;
                
-            
+            // Gather each survey on same place.
             $data[] = $survey;
             reset($content);
                 
-                
-                
-
-            
-            // echo gettype($questionnaire);
-        echo "\n\n";
-        
-
-            // dd($data);
         }
-        
+
+        // Return them as one object
         return response()->json($data, 200);
-        // return $questionnaires;
-        // return $questions;
+
     }
 
     // Store a new questionnaire
