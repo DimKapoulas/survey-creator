@@ -18,7 +18,7 @@ Vue.component('modal', require('./vue/ModalComponent.vue'));
 const app = new Vue({
     el: '#app',
     components: { App },
-    data: {
-        showModal: false
-    }
+    // data: {
+    //     showModal: false
+    // }
 })

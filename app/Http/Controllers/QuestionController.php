@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 class QuestionController extends Controller
 {
     // List all questions and their corresponding answers
-    public function index()
+    public function index(Questionnaire $questionnaire)
     {
-        $data = Question::with('answers')->get();
+        $data = $questionnaire->questions()->get();
         
         return (new QuestionCollection($data))
                 ->response()

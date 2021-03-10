@@ -1,25 +1,20 @@
 <template>
     <div>
-        <div :key="item.id" v-for="item in survey" class="survey">
-                <h4>{{ item.title }}</h4>
-                <h3>
-                <button @click="editSurvey" class="details">details</button>
-                <i @click="removeItem" class="fas fa-times"></i>
-                </h3>
-                <!-- <h3>{{ survey.title }}<h3> -->
-                
+        <div class="survey">
+            <!-- <h3>{{ title }}</h3> -->
+            
+            <button id="show-modal" class="details" @click="showModal = !showModal">Details</button>
+            <i @click="removeItem" class="fas fa-times"></i>
+            <h3>{{ survey.title }}</h3>
+            
 
-        </div>   
-        <div>
-            <button id="show-modal" @click="showModal = true">Show Modal</button>
+
             <!-- use the modal component, pass in the prop -->
-            <modal v-if="showModal" @close="showModal = false">
-                <!--
-                you can use custom content here to overwrite
-                default content
-                -->
-                <h3 slot="header">custom header</h3>
-            </modal>
+            <!-- <modal v-if="showModal" @click="showModal = false">
+                <div v-for="question in questions" :key="question.id">
+                {{ question.question }}
+                </div>
+            </modal> -->
         </div>
     </div>
 </template>
@@ -28,14 +23,42 @@
 import modal from './ModalComponent.vue'
 
 export default {
-    props: ['survey', 'showModal'],
+    props: {
+        survey: Object
+    },
     components: {
         modal
     },
-
+    // Object's local memory (scoped)
+    data() {
+        return {
+            id: Number,
+            title: String
+        }
+    },
+    // Runs on component's instance rendering
+    // mounted() {
+    //     this.getQuestions();
+    //     this.getAnswers(this.id);
+    // },
     methods: {
+        getQuestions() {
+            axios.get('api/questionnaires/' + this.id + '/questions/')
+            .then( response => {
+                this.questions = response.data.data
+            })
+
+
+        },
+        getAnswers(id) {
+            axios.get('api/questions/' + id + '/answers/') 
+            .then( response => {
+                this.answers = response.data.data
+            })
+
+        },
         removeItem() {
-            axios.delete('api/questionnaires/' +  this.survey[0].id)
+            axios.delete('api/questionnaires/' +  this.id)
             .then( response => {
                 if( response.status == 204 ){
                     this.$emit('itemchanged')
@@ -44,7 +67,8 @@ export default {
             .catch( error => {
                 console.log( error )
             })
-        }
+        },
+
     },
 
     
@@ -57,7 +81,7 @@ export default {
   color: red;
 }
 .survey {
-  background: #e4dede;
+  background: #cac7c7;
   margin: 5px;
   padding: 10px 20px;
 }

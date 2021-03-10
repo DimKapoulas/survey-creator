@@ -27,11 +27,15 @@ export default {
         getSurveys() {
             axios.get('/api/questionnaires/')
             .then( response => {
-                this.surveys = response.data
+                this.surveys = response.data.data
+                if(this.surveys.length === 0) {
+                  window.alert('There are no available surveys!')
+                }
             })
             .catch( error => {
                 console.log( error );
             })
+            
         }
 
     },
@@ -57,6 +61,7 @@ body {
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
+  background: cornsilk;
   border: 1px solid steelblue;
   padding: 30px;
   border-radius: 5px;

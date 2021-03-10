@@ -6,6 +6,7 @@ use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Http\Resources\QuestionnaireCollection;
 use App\Http\Resources\QuestionnaireResource;
+use App\Http\Resources\QuestionResource;
 use Illuminate\Http\Request;
 
 class QuestionnaireController extends Controller
@@ -13,9 +14,58 @@ class QuestionnaireController extends Controller
     // Retrieve all questionnaires starting from latest
     public function index()
     {
-        $questionnaires = Questionnaire::orderBy('created_at', 'DESC')->get();
+        // $questionnaires = Questionnaire::orderBy('created_at', 'DESC')->get();
+        $questionnaires = Questionnaire::all();
+        // $questionnaires = Questionnaire::find(1);
+        // echo gettype($questionnaires[0]->id);
+        $survey = [];
+        $data = [];
+        $content = [];
+        foreach($questionnaires as $questionnaire) {
+            $questions = $questionnaire->questions()->get();
+            // echo $questions;
+            // echo "\n\n\n";
+            // break;
 
-        return new QuestionnaireCollection($questionnaires);
+            foreach($questions as $question) {
+                // echo $question->question;
+                echo "\n\n\n\n";
+                
+                $question_answers_pair = $question->with('answers')
+                                                   ->where('id','=',$question->id)
+                                                   ->get();
+                // echo $pairs;
+                // dd($pairs);
+                $content[] = $question_answers_pair;
+                
+            }
+
+            $survey = [
+                'id' => $questionnaire->id,
+                'title' => $questionnaire->title,
+                'questions' => $content,
+            ];
+            
+            // return;
+               
+            
+            $data[] = $survey;
+            reset($content);
+                
+                
+                
+
+            
+            // echo gettype($questionnaire);
+        echo "\n\n";
+        
+
+            // dd($data);
+        }
+        
+        return response()->json($data, 200);
+        // return $questionnaires;
+        // return $questions;
     }
 
     // Store a new questionnaire
@@ -61,8 +111,7 @@ class QuestionnaireController extends Controller
     public function destroy(Questionnaire $questionnaire)
     {
 
-        // Cascade delete on related answers (with ManyThrough())
-        // then on related the question,then itself
+        // Cascade delete on related questions and answers
         $questionnaire->answers()->delete();
         $questionnaire->questions()->delete();
         $questionnaire->delete();

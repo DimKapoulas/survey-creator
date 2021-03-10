@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div :key="survey.id" v-for="survey in surveys">
-            <Survey :survey="survey"
+        <div v-for="survey in surveys" v-bind:key="survey.id" >
+            <Survey :="survey"
             @itemchanged="$emit('reloadlist')"/>
         </div>
     </div>
@@ -11,7 +11,9 @@
 import Survey from './Survey'
 
 export default {
-    props: ['surveys'],
+    props: {
+        surveys: Array
+    },
     components: {
         Survey
     }
