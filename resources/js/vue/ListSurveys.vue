@@ -2,7 +2,7 @@
     <div>
         <div v-for="survey in surveys" v-bind:key="survey.id" >
             <Survey :survey="survey"
-            @itemchanged="$emit('reloadlist')"/>
+            @itemchanged="$emit('itemchanged')"/>
         </div>
     </div>
 </template>

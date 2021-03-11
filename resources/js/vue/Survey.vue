@@ -1,24 +1,23 @@
 <template>
     <div>
         <div class="survey">
-            
             <h2>{{ survey.title }}</h2>
             
             <button id="show-modal" class="details" @click="showModal = !showModal">Details</button>
-            <i @click="removeItem(id)" class="fas fa-times"></i>
-
+            <i @click="removeSurvey" class="fas fa-times"></i>
 
 
             <modal v-if="showModal" @click="showModal = false">
-                    <button>add new question</button>
+            <button>add new question</button>
 
              <div v-bind:key="question.id" v-for="question in survey.questions">
-        <br>
+                <br>
+                <br>
 
-                    <button type="button">Edit question</button>
-                <Question :question="question" 
-                    
-                    />
+                <button type="button">Edit question</button>
+                <i @click="removeItem(id)" class="fas fa-times"></i>
+                <Question :question="question"  
+                @itemchanged="$emit('itemchanged')"/>
              </div>
 
             </modal>
@@ -42,7 +41,6 @@ export default {
     // Object's local memory (scoped)
     data () {
        return{
-
        showModal: false
         }
     },
@@ -67,7 +65,7 @@ export default {
             })
 
         },
-        removeItem() {
+        removeSurvey() {
             axios.delete('api/questionnaires/' + this.survey.id)
             .then( response => {
                 if( response.status == 204 ){

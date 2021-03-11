@@ -7,7 +7,7 @@
       <Add-Survey />
     </div>
     <List-Surveys :surveys="surveys"
-    @reloadlist="getSurveys()"/>
+    @itemchanged="getSurveys()"/>
 </div>
     
 </template>
