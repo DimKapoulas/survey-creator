@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="survey">
-            <h2>{{ survey.title }}</h2>
+            <h1>{{ survey.title }}</h1>
             
             <button id="show-modal" class="details" @click="showModal = !showModal">Details</button>
             <i @click="removeSurvey" class="fas fa-times"></i>
@@ -12,10 +12,6 @@
 
              <div v-bind:key="question.id" v-for="question in survey.questions">
                 <br>
-                <br>
-
-                <button type="button">Edit question</button>
-                <i @click="removeItem(id)" class="fas fa-times"></i>
                 <Question :question="question"  
                 @itemchanged="$emit('itemchanged')"/>
              </div>
@@ -32,7 +28,6 @@ import Question from './Question'
 export default {
     props: {
         survey: Object,
-        id: Number
     },
     components: {
         modal,
