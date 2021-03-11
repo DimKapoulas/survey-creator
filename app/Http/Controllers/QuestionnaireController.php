@@ -14,45 +14,28 @@ class QuestionnaireController extends Controller
     // Retrieve all questionnaires starting from latest
     public function index()
     {
-        // $questionnaires = Questionnaire::orderBy('created_at', 'DESC')->get();
-        $questionnaires = Questionnaire::all();
-        
-        // Init auxiliary arrays
-        $survey = [];
+        // Init response array
         $data = [];
-        $content = [];
 
-        // For every questionnaire fetch its related questions
-        foreach($questionnaires as $questionnaire) {
-            $questions = $questionnaire->questions()->get();
-
-            // For each of these questions, fetch its related answers
-            foreach($questions as $question) {
-                // Similar to "question A: ans1, ans2, ... etc"
-                $question_answers_pair = $question->with('answers')
-                                                   ->where('id','=',$question->id)
-                                                   ->get();
-                
-                // Gather each pair
-                $content[] = $question_answers_pair;
-                
-            }
-
-            // Create survey
-            $survey = [
+        // Get all surveys and for each one of them
+        foreach(Questionnaire::all() as  $questionnaire) {
+            // Fetch its questions
+            $questions = $questionnaire->questions() ;
+            // Pair them with their related answers
+            $question_answer_pair = $questions->with('answers')->get();
+            
+            // Make a survey object
+            $content = [
                 'id' => $questionnaire->id,
                 'title' => $questionnaire->title,
-                'questions' => $content,
-                // 'questions' => $question_answers_pair
+                'questions' => $question_answer_pair,
             ];
-               
-            // Gather each survey on same place.
-            $data[] = $survey;
-            reset($content);
-                
+
+            // Store all surveys in one place
+            $data[] = $content;
+
         }
 
-        // Return them as one object
         return response()->json($data, 200);
 
     }
@@ -71,19 +54,18 @@ class QuestionnaireController extends Controller
     // Show details of specific questionnaire as a whole
     public function show (Questionnaire $questionnaire)
     {       
+        // Fetch its questions and their related answers
         $question = $questionnaire->questions() ;
         $question_answer_pair = $question->with('answers')->get();
-        $title = $questionnaire->title;
-        $id = $questionnaire->id;
 
+        // Make response object out of them
         $data = [
-            'id' => $id,
-            'title' => $title,
+            'id' => $questionnaire->id,
+            'title' => $questionnaire->title,
             'questions' => $question_answer_pair,
         ];
 
         return response()->json($data, 200);
-
     }
 
     public function update(Questionnaire $questionnaire)
