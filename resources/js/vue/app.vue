@@ -46,7 +46,7 @@ export default {
         },
         toggleAddSurv() {
           this.showAddSurv = !this.showAddSurv
-          console.log(this.showAddSurv)
+          console.log('click')
         }
 
     },
