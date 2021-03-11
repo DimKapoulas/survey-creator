@@ -20,7 +20,7 @@ class QuestionnaireController extends Controller
         // Get all surveys and for each one of them
         foreach(Questionnaire::all() as  $questionnaire) {
             // Fetch its questions
-            $questions = $questionnaire->questions() ;
+            $questions = $questionnaire->questions();
             // Pair them with their related answers
             $question_answer_pair = $questions->with('answers')->get();
             

@@ -27,7 +27,7 @@ export default {
         getSurveys() {
             axios.get('/api/questionnaires/')
             .then( response => {
-                this.surveys = response.data.data
+                this.surveys = response.data
                 if(this.surveys.length === 0) {
                   window.alert('There are no available surveys!')
                 }

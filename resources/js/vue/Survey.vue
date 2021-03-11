@@ -1,13 +1,14 @@
 <template>
     <div>
         <div class="survey">
-            <!-- <h3>{{ title }}</h3> -->
             
             <button id="show-modal" class="details" @click="showModal = !showModal">Details</button>
             <i @click="removeItem" class="fas fa-times"></i>
             <h3>{{ survey.title }}</h3>
-            
+            <div v-bind:key="question.id" v-for="question in survey.questions">
+                <Question :question="question" />
 
+            </div>
 
             <!-- use the modal component, pass in the prop -->
             <!-- <modal v-if="showModal" @click="showModal = false">
@@ -21,22 +22,19 @@
 
 <script>
 import modal from './ModalComponent.vue'
+import Question from './Question'
 
 export default {
     props: {
         survey: Object
     },
     components: {
-        modal
+        modal,
+        Question
     },
     // Object's local memory (scoped)
-    data() {
-        return {
-            id: Number,
-            title: String
-        }
-    },
-    // Runs on component's instance rendering
+    
+        // Runs on component's instance rendering
     // mounted() {
     //     this.getQuestions();
     //     this.getAnswers(this.id);
