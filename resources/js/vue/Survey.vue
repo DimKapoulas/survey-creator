@@ -2,20 +2,26 @@
     <div>
         <div class="survey">
             
+            <h2>{{ survey.title }}</h2>
+            
             <button id="show-modal" class="details" @click="showModal = !showModal">Details</button>
-            <i @click="removeItem" class="fas fa-times"></i>
-            <h3>{{ survey.title }}</h3>
-            <div v-bind:key="question.id" v-for="question in survey.questions">
-                <Question :question="question" />
+            <i @click="removeItem(id)" class="fas fa-times"></i>
 
-            </div>
 
-            <!-- use the modal component, pass in the prop -->
-            <!-- <modal v-if="showModal" @click="showModal = false">
-                <div v-for="question in questions" :key="question.id">
-                {{ question.question }}
-                </div>
-            </modal> -->
+
+            <modal v-if="showModal" @click="showModal = false">
+                    <button>add new question</button>
+
+             <div v-bind:key="question.id" v-for="question in survey.questions">
+        <br>
+
+                    <button type="button">Edit question</button>
+                <Question :question="question" 
+                    
+                    />
+             </div>
+
+            </modal>
         </div>
     </div>
 </template>
@@ -26,14 +32,20 @@ import Question from './Question'
 
 export default {
     props: {
-        survey: Object
+        survey: Object,
+        id: Number
     },
     components: {
         modal,
         Question
     },
     // Object's local memory (scoped)
-    
+    data () {
+       return{
+
+       showModal: false
+        }
+    },
         // Runs on component's instance rendering
     // mounted() {
     //     this.getQuestions();
@@ -43,7 +55,7 @@ export default {
         getQuestions() {
             axios.get('api/questionnaires/' + this.id + '/questions/')
             .then( response => {
-                this.questions = response.data.data
+                this.questions = response.data
             })
 
 
@@ -56,7 +68,7 @@ export default {
 
         },
         removeItem() {
-            axios.delete('api/questionnaires/' +  this.id)
+            axios.delete('api/questionnaires/' + this.survey.id)
             .then( response => {
                 if( response.status == 204 ){
                     this.$emit('itemchanged')
@@ -68,10 +80,8 @@ export default {
         },
 
     },
-
-    
 }
-// var showModal = false;
+
 </script>
 
 <style scope>
@@ -93,8 +103,8 @@ export default {
   align-items: right;
   /* justify-content: space-around; */
 }
-.details {
-    /* display: flex; */
+.button {
+    color: #4661b8;
 }
 .trashcan {
     background: #faf6f6;

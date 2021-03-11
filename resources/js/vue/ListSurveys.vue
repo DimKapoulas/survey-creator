@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="survey in surveys" v-bind:key="survey.id" >
-            <Survey :="survey"
+            <Survey :survey="survey"
             @itemchanged="$emit('reloadlist')"/>
         </div>
     </div>

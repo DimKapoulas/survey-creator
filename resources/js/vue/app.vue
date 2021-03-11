@@ -1,8 +1,11 @@
 <template>
 <div class="container">
-    <Header  title="Survey Creator"/>
+    <Header @click-btn="toggleAddSurv"
+    title="Survey Creator"/>
     <!--TODO: toggleable add form  -->
-
+    <div v-if="showAddSurv">
+      <Add-Survey />
+    </div>
     <List-Surveys :surveys="surveys"
     @reloadlist="getSurveys()"/>
 </div>
@@ -12,15 +15,18 @@
 <script>
 import Header from './Header'
 import ListSurveys from './ListSurveys'
+import AddSurvey from './AddSurvey'
 
 export default {
     components: {
         Header,
-        ListSurveys
+        ListSurveys,
+        AddSurvey
     },
     data() {
         return {
-            surveys: []
+            surveys: [],
+            showAddSurv: false,
         }
     },
     methods: {
@@ -28,6 +34,7 @@ export default {
             axios.get('/api/questionnaires/')
             .then( response => {
                 this.surveys = response.data
+                console.log(this.surveys);
                 if(this.surveys.length === 0) {
                   window.alert('There are no available surveys!')
                 }
@@ -36,6 +43,10 @@ export default {
                 console.log( error );
             })
             
+        },
+        toggleAddSurv() {
+          this.showAddSurv = !this.showAddSurv
+          console.log(this.showAddSurv)
         }
 
     },
@@ -61,7 +72,7 @@ body {
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
-  background: cornsilk;
+  background: rgb(150, 175, 223);
   border: 1px solid steelblue;
   padding: 30px;
   border-radius: 5px;

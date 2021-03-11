@@ -1,12 +1,34 @@
 <template>
     <div>
-        <h5>{{ question.question }}</h5>
-        <div v-for="answer in questions.answers" :key="answer.id">
-            <Answer :answer="answer" />
+        <h4>{{ question.question }}</h4>
+                    <button>add new answer</button>
+        <div v-for="answer in question.answers" :key="answer.id">
+            <ul>
+                <li class="list">
+
+            <Answer :answer="answer"/>
+
+                </li>
+            </ul>
         </div>
     </div>
 </template>
 
-import Answer from '.Answer'
+<script>
+import Answer from './Answer'
+export default {
+    components: {
+        Answer,
+    },
+    props: {
+        question: Object
+    }
+}
+</script>
 
-expor
+<style scoped>
+.list {
+    /* display: flex; */
+    margin-left: 30px;
+}
+</style>
