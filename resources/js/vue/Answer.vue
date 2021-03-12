@@ -38,7 +38,7 @@ export default {
     data() {
         return {
             showModal: false,
-            edit_answer:'', 
+            edit_answer: this.answer.answer, 
         }
     },
     methods: {
@@ -64,7 +64,7 @@ export default {
                     this.$emit('itemchanged');
                 }
             })
-            .catch( error => {
+            .catch( error => { 
                 console.log(error )
             });
         }

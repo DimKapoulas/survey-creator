@@ -7,5 +7,7 @@
                 </div>
             </div>
         <button class="Modal-close" @click="$emit('close')">close</button>
+            <br>
+            <br>
     </div>
 </template>

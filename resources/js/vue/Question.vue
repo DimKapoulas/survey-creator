@@ -1,14 +1,33 @@
 <template>
     <div>
-        <button type="button">Edit question</button>
-        <i @click="removeQuestion" class="fas fa-times"></i>
-        <h3>{{ question.question }}</h3>
+        <!-- Edit question -->
         <button type="text"
-        @click="showModal = !showModal">
+        @click="showEditQuestion = !showEditQuestion">
+            Edit question</button>
+        
+        <i @click="removeQuestion" class="fas fa-times"></i>
+
+        <h3>{{ question.question }}</h3>
+        
+        <Modal v-if="showEditQuestion" 
+                    @click="showEditQuestion = false"
+                    @close="showEditQuestion = !showEditQuestion">
+                    <form>
+                        <div class="form-control">
+                            <input type="text" v-model="edit_question" name="question" placeholder="Edit question" />
+                        </div>
+                        <input type="submit" value="Save"
+                        @click="editQuestion()" class="btn"/>
+                    </form>
+        </Modal>
+
+       <!-- Add new answer -->
+        <button type="button"
+        @click="showAddAnswer = !showAddAnswer">
             add new answer</button>
-        <Modal v-if="showModal" 
-            @click="showModal = false"
-            @close="showModal = !showModal">
+        <Modal v-if="showAddAnswer" 
+            @click="showAddAnswer = false"
+            @close="showAddAnswer = !showAddAnswer">
             <form>
                 <div class="form-control">
                     <input type="text" v-model="new_answer" name="answer" placeholder="Add new answer for question"/>
@@ -43,8 +62,10 @@ export default {
     },
     data () {
         return {
-            showModal: false,
+            showAddAnswer: false,
+            showEditQuestion: false,
             new_answer: '',
+            edit_question: this.question.question,
         }
     },  
     methods: {
@@ -58,6 +79,21 @@ export default {
             .catch( error => {
                 console.log(error )
             })
+
+        },
+        editQuestion() {
+            axios.put('api/questionnaires/' + this.question.questionnaire_id + '/questions/' + this.question.id,
+            {
+                question: this.edit_question
+            })
+            .then( response => {
+                if( response.status == 200 ) {
+                    this.$emit('itemchanged');
+                }
+            })
+            .catch( error => {
+                console.log(error )
+            });
 
         },
         newAnswer() {
