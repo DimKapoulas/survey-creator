@@ -1,7 +1,9 @@
 <template>
     <header>
         <h3 class="header">{{ title }}</h3>
-        <Button text="Add Survey"/>
+        <Button @click-btn="$emit('click-btn')"
+        :text="addSurveyText ? 'Close' : 'Add Task'"
+        :color="addSurveyText ? 'red' : 'green'"/>
     </header>
 </template>
 
@@ -11,7 +13,8 @@ import Button from './Button'
 export default {
     name: 'Header',
     props: {
-        'title': String
+        title: String,
+        addSurveyText: Boolean
     },
     components: {
         Button

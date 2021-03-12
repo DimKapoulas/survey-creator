@@ -1,9 +1,9 @@
 <template>
 <div class="container">
-    <Header @click-btn="toggleAddSurv"
-    title="Survey Creator"/>
+    <Header @click-btn="toggleAddSurvey"
+    title="Survey Creator" :addSurveyText="showAddSurvey"/>
     <!--TODO: toggleable add form  -->
-    <div v-if="showAddSurv">
+    <div v-if="showAddSurvey">
       <Add-Survey />
     </div>
     <List-Surveys :surveys="surveys"
@@ -26,7 +26,7 @@ export default {
     data() {
         return {
             surveys: [],
-            showAddSurv: false,
+            showAddSurvey: false,
         }
     },
     methods: {
@@ -44,10 +44,9 @@ export default {
             })
             
         },
-        toggleAddSurv() {
-          this.showAddSurv = !this.showAddSurv
-          console.log('click')
-        }
+        toggleAddSurvey() {
+          this.showAddSurvey = !this.showAddSurvey
+        } 
 
     },
     created() {
