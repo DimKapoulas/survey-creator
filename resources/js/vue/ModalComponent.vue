@@ -6,8 +6,16 @@
                     <slot></slot>
                 </div>
             </div>
-        <button class="Modal-close" @click="$emit('close')">close</button>
+        <button class="Modal-close" @click="$emit('close')">{{ text }}</button>
             <br>
             <br>
     </div>
 </template>
+
+<script>
+export default {
+    props: {
+        text: String
+    }
+}
+</script>

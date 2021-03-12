@@ -5,7 +5,7 @@
             <h6>{{ answer.answer }}</h6>
             <button type="text"
             @click="showModal = !showModal">Edit Answer</button>
-            <i @click="removeAnswer" class="fas fa-times"></i>
+            <i @click="removeAnswer" class="fas fa-times" style="color: red"></i>
 
         </div>
 

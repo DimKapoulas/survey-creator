@@ -2,7 +2,7 @@
 <div class="container">
     <Header @click-btn="toggleAddSurvey"
     title="Survey Creator" :addSurveyText="showAddSurvey"/>
-    <!--TODO: toggleable add form  -->
+    <!-- Toggle-able Add New Survey form -->
     <div v-if="showAddSurvey">
       <Add-Survey />
     </div>

@@ -5,7 +5,7 @@
         @click="showEditQuestion = !showEditQuestion">
             Edit question</button>
         
-        <i @click="removeQuestion" class="fas fa-times"></i>
+        <i @click="removeQuestion" class="fas fa-times" style="color: red"></i>
 
         <h3>{{ question.question }}</h3>
         
