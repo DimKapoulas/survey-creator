@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faPlusSquare, faTrash)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('modal', require('./vue/ModalComponent.vue'));
+Vue.component('Modal', require('./vue/ModalComponent.vue'));
 
 
 const app = new Vue({

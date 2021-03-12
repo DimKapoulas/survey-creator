@@ -1,20 +1,43 @@
 <template>
-    <div class="answers">
-        <h6>{{ answer.answer }}</h6>
-        <button>Edit answer</button>
-        <i @click="removeAnswer" class="fas fa-times"></i>
+    <div>
+        <div class="answers">
+            <h6>{{ answer.answer }}</h6>
+            <button type="text"
+            @click="showModal = !showModal">Edit Answer</button>
+            <i @click="removeAnswer" class="fas fa-times"></i>
 
+        </div>
+
+        <Modal v-if="showModal" 
+            @click="showModal = false"
+            @close="showModal = !showModal">
+            <form>
+                <div class="form-control">
+                    <input type="text" v-model="input" name="answer" placeholder="Edit this answer"/>
+                </div>
+                <input type="submit" value="Save"
+                @click="updateAnswer()" class="btn"/>
+            </form>
+        </Modal>
     </div>
 </template>
 
 <script>
+import Button from './Button'
+import Modal from './ModalComponent'
+
 export default {
     props: {
         answer: Object,
     },
+    components: {
+        Button,
+        Modal
+    },
     data() {
         return {
-            id: Number
+            showModal: false,
+            input_answer:'', 
         }
     },
     methods: {
@@ -29,6 +52,20 @@ export default {
                 console.log(error )
             })
 
+        },
+        updateAnswer() {
+            axios.put('api/questions/' + this.answer.question_id + '/answers/' + this.answer.id,
+            { 
+                answer: this.input_anser
+            })
+            .then( response => {
+                if( response.status == 200 ) {
+                    this.$emit('itemchanged');
+                }
+            })
+            .catch( error => {
+                console.log(error )
+            });
         }
     }
 }
@@ -37,6 +74,10 @@ export default {
 <style scoped>
 .answers {
     display: right;
-
+}
+.btn {
+    display: flex;
+    width: 15%;
+    justify-content: center;
 }
 </style>

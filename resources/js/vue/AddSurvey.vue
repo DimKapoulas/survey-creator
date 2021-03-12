@@ -15,7 +15,6 @@
         </div>
         <input type="submit" value="Save Survey" class="btn btn-block">
 
-        
     </form>
 </template>
 

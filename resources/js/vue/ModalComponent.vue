@@ -1,11 +1,11 @@
 <template>
-    <div class="modal is-active">
-        <div class="modal-background"></div>
-            <div class="modal-content">
+    <div class="Modal is-active">
+        <div class="Modal-background"></div>
+            <div class="Modal-content">
                 <div class="box">
                     <slot></slot>
                 </div>
             </div>
-        <button class="modal-close" @click="$emit('close')">close</button>
+        <button class="Modal-close" @click="$emit('close')">close</button>
     </div>
 </template>

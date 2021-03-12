@@ -3,26 +3,29 @@
         <div class="survey">
             <h1>{{ survey.title }}</h1>
             
-            <button id="show-modal" class="details" @click="showModal = !showModal">Details</button>
+            <button id="show-modal" class="details" @click="showModal = !showModal"
+            >Details</button>
             <i @click="removeSurvey" class="fas fa-times"></i>
-
-
-            <modal v-if="showModal" @click="showModal = false">
-            <button>add new question</button>
-
-             <div v-bind:key="question.id" v-for="question in survey.questions">
-                <br>
-                <Question :question="question"  
-                @itemchanged="$emit('itemchanged')"/>
-             </div>
-
-            </modal>
         </div>
+
+            <Modal v-if="showModal" 
+            @click="showModal = false"
+            @close="showModal = !showModal">
+                <button>add new question</button>
+    
+                <div v-bind:key="question.id" v-for="question in survey.questions">
+                    <br>
+                    <Question :question="question"  
+                    @itemchanged="$emit('itemchanged')"/>
+                </div>
+
+            </Modal>
+        
     </div>
 </template>
 
 <script>
-import modal from './ModalComponent.vue'
+import Modal from './ModalComponent.vue'
 import Question from './Question'
 
 export default {
@@ -30,12 +33,13 @@ export default {
         survey: Object,
     },
     components: {
-        modal,
+        Modal,
         Question
     },
     // Object's local memory (scoped)
     data () {
        return{
+           text: String,
        showModal: false
         }
     },
