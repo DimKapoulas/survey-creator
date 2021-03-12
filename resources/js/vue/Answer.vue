@@ -1,5 +1,6 @@
 <template>
     <div>
+        
         <div class="answers">
             <h6>{{ answer.answer }}</h6>
             <button type="text"
@@ -13,7 +14,7 @@
             @close="showModal = !showModal">
             <form>
                 <div class="form-control">
-                    <input type="text" v-model="input" name="answer" placeholder="Edit this answer"/>
+                    <input type="text" v-model="edit_answer" name="answer" placeholder="Edit this answer"/>
                 </div>
                 <input type="submit" value="Save"
                 @click="updateAnswer()" class="btn"/>
@@ -37,7 +38,7 @@ export default {
     data() {
         return {
             showModal: false,
-            input_answer:'', 
+            edit_answer:'', 
         }
     },
     methods: {
@@ -56,7 +57,7 @@ export default {
         updateAnswer() {
             axios.put('api/questions/' + this.answer.question_id + '/answers/' + this.answer.id,
             { 
-                answer: this.input_anser
+                answer: this.edit_answer
             })
             .then( response => {
                 if( response.status == 200 ) {
