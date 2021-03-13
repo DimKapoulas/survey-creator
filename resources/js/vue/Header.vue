@@ -2,7 +2,7 @@
     <header>
         <h3 class="header">{{ title }}</h3>
         <Button @click-btn="$emit('click-btn')"
-        :text="addSurveyText ? 'Close' : 'Add Task'"
+        :text="addSurveyText ? 'Close' : 'Add Survey'"
         :color="addSurveyText ? 'red' : 'green'"/>
     </header>
 </template>

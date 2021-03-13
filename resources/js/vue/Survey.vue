@@ -23,16 +23,16 @@
                         <div class="form-control">
                             <form>
                                 <!-- Question input -->
-                            <input type="text" v-model="new_question" name="question" placeholder="Enter a question"/>
+                                <input type="text" v-model="new_question" name="question" placeholder="Enter a question"/>
                                 <!-- Dynamic multiple answer inputs -->
-                            <div class="form-group" v-for="(input,k) in inputs" :key="k">
-                                <input type="text" class="form-control" v-model="input.answer" placeholder="Enter answer for this question">
-                                <span>
-                                    <i class="fas fa-plus-circle" style="color:green" @click="add(k)" v-show="k == inputs.length-1"></i>
-                                    <i class="fas fa-minus-circle" style="color:red" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)"></i>
+                                <div class="form-group" v-for="(input,k) in inputs" :key="k">
+                                    <input type="text" class="form-control" v-model="input.answer" placeholder="Enter answer for this question">
+                                    <span>
+                                        <i class="fas fa-plus-circle" style="color:green" @click="add(k)" v-show="k == inputs.length-1"></i>
+                                        <i class="fas fa-minus-circle" style="color:red" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)"></i>
 
-                                </span>
-                            </div>
+                                    </span>
+                                </div>
                             </form>
                         </div>
 
