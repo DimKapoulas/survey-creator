@@ -27,7 +27,7 @@
             add new answer</button>
         <Modal v-if="showAddAnswer" 
             @click="showAddAnswer = false"
-            @close="showAddAnswer = !showAddAnswer">
+            @close="showAddAnswer = !showAddAnswer" text="close">
             <form>
                 <div class="form-control">
                     <input type="text" v-model="new_answer" name="answer" placeholder="Add new answer for question"/>

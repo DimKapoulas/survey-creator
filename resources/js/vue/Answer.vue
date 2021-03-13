@@ -11,7 +11,7 @@
 
         <Modal v-if="showModal" 
             @click="showModal = false"
-            @close="showModal = !showModal">
+            @close="showModal = !showModal" text="close">
             <form>
                 <div class="form-control">
                     <input type="text" v-model="edit_answer" name="answer" placeholder="Edit this answer"/>

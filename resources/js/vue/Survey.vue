@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{ test_id }}
+        <!-- {{ question_id }} -->
         <div class="survey">
             <h1>{{ survey.title }}</h1>
             
@@ -38,12 +38,12 @@
                         </div>
 
                         <input type="submit" value="Save"
-                        @click="newQuestion()" class="btn"/>
+                        @click="newQuestion" class="btn"/>
                     </form>
                 </Modal>
 
                 <!-- List this Survey's questions -->
-                <div v-bind:key="question.id" v-for="question in survey.questions">
+                <div v-bind:key="questionnaire_id" v-for="(question, questionnaire_id) in survey.questions">
                     <br>
                     <Question :question="question"  
                     @itemchanged="$emit('itemchanged')"/>
@@ -67,6 +67,7 @@ export default {
         Question
     },
     // Object's local memory (scoped)
+
     data () {
     return{
             text: String,
@@ -78,13 +79,12 @@ export default {
                     answer: ''
                 }
             ],
-            test_id: ''
         }
     },
         // Runs on component's instance rendering
     // mounted() {
     //     this.getQuestions();
-    //     this.getAnswers(this.id);
+    //     this.getAnswers(thisques_id);
     // },
     methods: {
         // Add more input fields
@@ -96,9 +96,10 @@ export default {
             this.inputs.splice(index, 1);
         },
         getQuestions() {
-            axios.get('api/questionnaires/' + this.id + '/questions/')
+            axios.get('api/questionnaires/' + thisques_id + '/questions/')
             .then( response => {
                 this.questions = response.data
+                
             })
         },
         // Delete survey
@@ -113,41 +114,24 @@ export default {
                 console.log( error )
             })
         },
+       
         // Add a new question
-        newQuestion() {
-            axios.post('api/questionnaires/' + this.survey.id + '/questions/store',
+        async newQuestion() {
+            let res = await axios.post('api/questionnaires/' + this.survey.id + '/questions/store',
             { 
                 question: this.new_question
-            })
-            .then( response => {
-                if( response.status == 201 ) {
-                    // let test = response.data.data.id
-                    let question_id = response.data.data.id;
-                    console.log(question_id);
-                    // this.$emit('itemchanged');
-                }
-            })
-            .catch( error => {
-                console.log( error )
-            })
-            // Then save answers
-            for(var answer in this.inputs) {
-                axios.post('api/questions/' + question_id + '/answers/store', {
-                    answer: this.answer
-                })
-                .then( response => {
-                if( response.status == 200 ) {
-                    
-                    this.$emit('itemchanged');
-                }
-                })
-                .catch( error => {
-                    console.log(error )
-                }
-                );
-            }
-        }
+            });
 
+            // Store its id
+            let question_id = res.data.data.id;
+            
+            // With that id, store related entries for this question
+            this.inputs.forEach(function (entry) {
+                axios.post('api/questions/' + question_id + '/answers/store', {
+                    answer: entry.answer
+                });
+            });
+        }
     },
 }
 
