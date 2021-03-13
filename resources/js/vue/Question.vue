@@ -29,11 +29,15 @@
             @click="showAddAnswer = false"
             @close="showAddAnswer = !showAddAnswer" text="close">
             <form>
-                <div class="form-control">
-                    <input type="text" v-model="new_answer" name="answer" placeholder="Add new answer for question"/>
-                </div>
-                <input type="submit" value="Save"
-                @click="newAnswer()" class="btn"/>
+                <div class="form-group" v-for="(input,k) in inputs" :key="k">
+                        <input type="text" class="form-control" v-model="input.answer" placeholder="Enter answer for this question">
+                        <span>
+                            <i class="fas fa-plus-circle" style="color:green" @click="add(k)" v-show="k == inputs.length-1"></i>
+                            <i class="fas fa-minus-circle" style="color:red" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)"></i>
+
+                        </span>
+                    </div>
+                <input type="submit" value="Save" @click="newAnswer()" class="btn"/>
             </form>
         </Modal>
         
@@ -66,9 +70,22 @@ export default {
             showEditQuestion: false,
             new_answer: '',
             edit_question: this.question.question,
+            inputs: [
+                {
+                    answer: ''
+                }
+            ],
         }
     },  
     methods: {
+        // Add more input fields
+        add(index) {
+            this.inputs.push({ name: ''});
+        },
+        // Remove input fields
+        remove(index) {
+            this.inputs.splice(index, 1);
+        },
         removeQuestion() {
             axios.delete('api/questionnaires/' + this.question.questionnaire_id + '/questions/' + this.question.id)
             .then( response => {
@@ -97,18 +114,21 @@ export default {
 
         },
         newAnswer() {
-            axios.post('api/questions/' + this.question.id + '/answers/store',
-            { 
-                answer: this.new_answer
-            })
-            .then( response => {
-                if( response.status == 200 ) {
-                    this.$emit('itemchanged');
-                }
-            })
-            .catch( error => {
-                console.log(error )
+            this.inputs.forEach(entry => {
+                axios.post('api/questions/' + this.question.id + '/answers/store',
+                { 
+                    answer: entry.answer
+                })
+                .then( response => {
+                    if( response.status == 200 ) {
+                        this.$emit('itemchanged');
+                    }
+                })
+                .catch( error => {
+                    console.log( error )
+                });
             });
+                
         }
             
     }

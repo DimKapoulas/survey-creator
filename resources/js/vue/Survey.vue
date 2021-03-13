@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- {{ question_id }} -->
         <div class="survey">
             <h1>{{ survey.title }}</h1>
             
@@ -33,12 +32,11 @@
                                     <i class="fas fa-minus-circle" style="color:red" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)"></i>
 
                                 </span>
-                                </div>
+                            </div>
                             </form>
                         </div>
 
-                        <input type="submit" value="Save"
-                        @click="newQuestion" class="btn"/>
+                        <input type="submit" value="Save" @click="newQuestion" class="btn"/>
                     </form>
                 </Modal>
 
