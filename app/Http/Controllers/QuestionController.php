@@ -20,7 +20,19 @@ class QuestionController extends Controller
                 ->setStatuscode(200);
     }
 
-
+    public function bulk(Questionnaire $questionnaire, Request $request) {
+        $body = json_decode($request->getContent(), true);
+        error_log('before loop');
+        foreach($body as $entry) {
+            error_log('start');
+            error_log($entry);
+            $title = $entry->question;
+            error_log($title);
+            $answers = $entry->answers;
+            error_log($answers);
+            error_log('end!');
+        }
+    }
     // Storing a new question
     public function store(Questionnaire $questionnaire)
     {

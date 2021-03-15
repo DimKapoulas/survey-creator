@@ -105,6 +105,7 @@ export default {
 
         },
          async storeSurvey() {
+             
             // console.log("Survey is: ", this.survey[0])
             // console.log("From inside storeSurvey(): ", this.survey)
             // Post request for survey creation
@@ -115,32 +116,34 @@ export default {
             let survey_id = survey_res.data.data.id
             console.log("New survey id is: ", survey_id)
 
-            
+            let questions = await axios.post('/api/questionnaires/' + survey_id + '/questions/store/bulk', this.survey)
+    
+
 
             // this.survey.forEach(function(entry){
             //     console.log(entry.question)
             //     console.log(entry.answers)
             // })
             // Store each question for this survey
-            let question_ids = [];
-            this.survey.forEach(async entry => {
-                // console.log("Survey_question: ", entry.question );
-                let parsedQuestion = JSON.parse(JSON.stringify(entry.question))
-                console.log("Parsed question: ", parsedQuestion );
+            // let question_ids = [];
+            // this.survey.forEach(async entry => {
+            //     // console.log("Survey_question: ", entry.question );
+            //     let parsedQuestion = JSON.parse(JSON.stringify(entry.question))
+            //     console.log("Parsed question: ", parsedQuestion );
                 
-                 question_ids = await axios.post('/api/questionnaires/' + survey_id + '/questions/store', {
-                    question: parsedQuestion
-                })
-                .then( resp => {
-                    return resp.data.data.id;
-                })
+            //      question_res = await axios.post('/api/questionnaires/' + survey_id + '/questions/store', {
+            //         question: parsedQuestion
+            //     })
+            //     .then( resp => {
+            //         return resp.data.data.id;
+            //     })
                 
-                console.log("q_ids inside for each ", questions_ids)
+            //     console.log("q_ids inside for each ", questions_ids)
                 // let question_id = question_res.data.data.id
 
-            })
+            // })
 
-                console.log("q_ids outeside for each ", questions_ids)
+                // console.log("q_ids outeside for each ", questions_ids)
 
 
                 // console.log("Que_id: ", question_res.data.data.id)
