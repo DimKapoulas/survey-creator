@@ -40,7 +40,7 @@
                 <input type="submit" value="Save" @click="newAnswer()" class="btn"/>
             </form>
         </Modal>
-        
+        <!-- Show all the answers of a question -->
         <div v-for="answer in question.answers" :key="answer.id">
             <ul>
                 <li class="list">
@@ -86,6 +86,7 @@ export default {
         remove(index) {
             this.inputs.splice(index, 1);
         },
+        // Delete question
         removeQuestion() {
             axios.delete('api/questionnaires/' + this.question.questionnaire_id + '/questions/' + this.question.id)
             .then( response => {
@@ -96,8 +97,8 @@ export default {
             .catch( error => {
                 console.log(error )
             })
-
         },
+        // Update question
         editQuestion() {
             axios.put('api/questionnaires/' + this.question.questionnaire_id + '/questions/' + this.question.id,
             {
@@ -113,6 +114,7 @@ export default {
             });
 
         },
+        // Add answer
         newAnswer() {
             this.inputs.forEach(entry => {
                 axios.post('api/questions/' + this.question.id + '/answers/store',

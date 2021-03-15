@@ -1,5 +1,6 @@
 <template>
     <header>
+        <!-- App Header -->
         <h3 class="header">{{ title }}</h3>
         <Button @click-btn="$emit('click-btn')"
         :text="addSurveyText ? 'Close' : 'Add Survey'"

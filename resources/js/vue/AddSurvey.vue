@@ -3,8 +3,8 @@
     <form  class="form-control">
         <h3>Create a new Survey</h3>
             <input type="text" v-model="new_title" class="form-control" name="survey" placeholder="Enter survey title">
-        <!-- <button @click="num_questions += 1">Add question</button> -->
         <div>
+        <!-- Selection of num of Question forms -->
         <label>How many questions?</label>
         <select type="number" v-model="num_questions"  @change="makeInt(); notDone()" id="num_questions" min=0 style="width: 15%">
             <option value=0>0</option>
@@ -16,33 +16,30 @@
         </select>
         </div>
         <small>Fill in the form and press "Compose" before submiting.</small>
- <p><small>Press "Compose" after changed made to questions/answers</small></p>
+        <p><small>Press "Compose" after changed made to questions/answers</small></p>
+        
+        <!-- Question Forms -->
         <div class="form-group" v-for="(n,i) in num_questions" :key="i">
            <Add-Question ref="AddQuestion" @content-sent="makeSurvey" @answers-changed="notDone()">
            </Add-Question>
         </div>
         <input type="button"  @click="initSurveyArray(); getContent()"  value="Compose" class="btn btn-block">
-            <div v-if="done">
-                <p>Ready for submission!</p>
-            </div>
-            
+        <div v-if="done">
+            <p>Ready for submission!</p>
+        </div>
         <input type="submit"  @click="storeSurvey"  value="Save Survey" class="btn btn-block">
     </form>
-    {{ survey }}
-
 </div>
 </template>
 
 <script>
 import AddQuestion from './AddQuestion'
-import Modal2 from './Modal2'
 
 
 export default {
     name: 'AddSurvey',
     components: {
         AddQuestion,
-        Modal2  
     },
     data() {
         return {
@@ -50,9 +47,6 @@ export default {
             i: 0,
             num_questions: 0,
             new_title: '',
-            answer: '' ,
-            new_survey: '',
-            new_question: '',
             inputs: [
                 {
                     answer: ''
@@ -63,6 +57,7 @@ export default {
     },
 
     methods: {
+        // Upon question update --> Compose again
         notDone(){
             this.done = false;
         },
@@ -88,82 +83,23 @@ export default {
         },
         makeSurvey(content) {
             // Make a survey out of  the content of all AddQuestion forms
-            // let survey = [];
-            // survey = [...survey, content];
-            // console.log("Inside from makeSurvey(): ", survey);
-            // if(!this.first_time) {
-            //     this.survey = [];
-            // }
-
             this.survey = [...this.survey, content];
-            // console.log("Inside from makeSurvey(): ", this.survey);
             this.done = true;
-
-            // Pass survey to Parent (Header.vue) for submission
-            // this.$emit('submit', this.survey);
-            // this.first_time = false;
-
         },
+        // Send survey to api
          async storeSurvey() {
-             
-            // console.log("Survey is: ", this.survey[0])
-            // console.log("From inside storeSurvey(): ", this.survey)
-            // Post request for survey creation
             let survey_res = await axios.post('/api/questionnaires/store', {
                 title: this.new_title
             });
 
             let survey_id = survey_res.data.data.id
-            console.log("New survey id is: ", survey_id)
 
-            let questions = await axios.post('/api/questionnaires/' + survey_id + '/questions/store/bulk', this.survey)
-    
-
-
-            // this.survey.forEach(function(entry){
-            //     console.log(entry.question)
-            //     console.log(entry.answers)
-            // })
-            // Store each question for this survey
-            // let question_ids = [];
-            // this.survey.forEach(async entry => {
-            //     // console.log("Survey_question: ", entry.question );
-            //     let parsedQuestion = JSON.parse(JSON.stringify(entry.question))
-            //     console.log("Parsed question: ", parsedQuestion );
-                
-            //      question_res = await axios.post('/api/questionnaires/' + survey_id + '/questions/store', {
-            //         question: parsedQuestion
-            //     })
-            //     .then( resp => {
-            //         return resp.data.data.id;
-            //     })
-                
-            //     console.log("q_ids inside for each ", questions_ids)
-                // let question_id = question_res.data.data.id
-
-            // })
-
-                // console.log("q_ids outeside for each ", questions_ids)
-
-
-                // console.log("Que_id: ", question_res.data.data.id)
-                // console.log("question id is: ", question_id)
-            
-                // For of these questions related answers
-                // entry.answers.forEach(function(answers_entry){
-                //     // Parse Observer object into a string
-                //     let parsedAnswer = JSON.parse(JSON.stringify(answers_entry.answer))
-                //     console.log("This question answers are:", parsedAnswer)
-                //     axios.post('/api/questions/' + question_id + '/answers/store', 
-                //     {
-                //         answer: parsedAnswer
-                //     })
-                // })  
+            await axios.post('/api/questionnaires/' + survey_id + '/questions/store/bulk', this.survey)  
             
         },
         getContent(){
             var counter;
-            // For each AddQuestion forms, ask for their content
+            // For each AddQuestion forms, Parent to Child method call
             for(counter=0; counter < this.num_questions; counter++) {
                 this.$refs.AddQuestion[counter].sendContent();
             }

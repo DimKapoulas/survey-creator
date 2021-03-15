@@ -1,4 +1,5 @@
 <template>
+<!-- Customizable Button component -->
     <button @click="onClick"  :style="{ background: color }" class="btn">
         {{ text }}
     </button>

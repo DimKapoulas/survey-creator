@@ -1,18 +1,18 @@
 <template>
     <div>
-        
+        <!-- Answer info and controls -->
         <div class="answers">
             <h6>{{ answer.answer }}</h6>
             <button type="text"
             @click="showModal = !showModal">Edit Answer</button>
             <i @click="removeAnswer" class="fas fa-times" style="color: red"></i>
-
         </div>
 
         <Modal v-if="showModal" 
             @click="showModal = false"
             @close="showModal = !showModal" text="close">
             <form>
+                <!-- Answer Update section -->
                 <div class="form-control">
                     <input type="text" v-model="edit_answer" name="answer" placeholder="Edit this answer"/>
                 </div>
@@ -42,6 +42,7 @@ export default {
         }
     },
     methods: {
+        // Delete answer
         removeAnswer() {
             axios.delete('api/questions/' + this.answer.question_id + '/answers/' + this.answer.id)
             .then( response => {
@@ -54,6 +55,7 @@ export default {
             })
 
         },
+        // Edit answer
         updateAnswer() {
             axios.put('api/questions/' + this.answer.question_id + '/answers/' + this.answer.id,
             { 

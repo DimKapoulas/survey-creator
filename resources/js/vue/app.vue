@@ -4,8 +4,9 @@
     title="Survey Creator" :addSurveyText="showAddSurvey"/>
     <!-- Toggle-able Add New Survey form -->
     <div v-if="showAddSurvey">
-      <Add-Survey  @submit="storeSurvey"/>
+      <Add-Survey  />
     </div>
+    <!-- List all Surveys -->
     <List-Surveys :surveys="surveys"
     @itemchanged="getSurveys()"/>
 </div>
@@ -30,46 +31,26 @@ export default {
         }
     },
     methods: {
-        getSurveys() {
-            axios.get('/api/questionnaires/')
-            .then( response => {
-                this.surveys = response.data
-                console.log(this.surveys);
-                if(this.surveys.length === 0) {
-                  window.alert('There are no available surveys!')
-                }
-            })
-            .catch( error => {
-                console.log( error );
-            })
-            
-        },
-        async storeSurvey(survey) {
-
-            console.log("From inside App: ", survey)
-            // Post request for survey creation
-            let survey_res = await axios.post('/api/questionnaires/store', {
-                title: this.new_title
-            })
-            console.log("New survey id is: ")
-            let survey_id = survey_res.data.data.id
-
-            // // Store each question for this survey
-            // survey.forEach(async function(entry) {
-            //     console.log("Survey_question: ", entry.question );
-            //     // For of these questions related answers
-            //     entry.answers.forEach(function(answer){
-            //         // Parse Observer object into a string
-            //     let parsedAnswer = JSON.parse(JSON.stringify(answer))
-            //         console.log("This question answers are:", parsedAnswer)
-            //     })
-            // })
-        },
-        toggleAddSurvey() {
-          this.showAddSurvey = !this.showAddSurvey
-        } 
-
+      // Fetch all surveys
+      getSurveys() {
+          axios.get('/api/questionnaires/')
+          .then( response => {
+              this.surveys = response.data
+              console.log(this.surveys);
+              if(this.surveys.length === 0) {
+                window.alert('There are no available surveys!')
+              }
+          })
+          .catch( error => {
+              console.log( error );
+          })
+      },
+      // Show/hide add survey form
+      toggleAddSurvey() {
+        this.showAddSurvey = !this.showAddSurvey
+      } 
     },
+    // Run upon initiation
     created() {
         this.getSurveys();
     }

@@ -47,8 +47,7 @@ export default {
             this.$emit('answers-changed')
         },
         // Send question object to parent survey
-        sendContent(){
-           
+        sendContent() {
             let content = {
                 question: this.new_question,
                 answers: this.inputs

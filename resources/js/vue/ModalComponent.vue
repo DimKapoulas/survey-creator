@@ -1,4 +1,5 @@
 <template>
+<!-- Toggle-able modal component -->
     <div class="Modal is-active">
         <div class="Modal-background"></div>
             <div class="Modal-content">

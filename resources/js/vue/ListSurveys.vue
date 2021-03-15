@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- Survey show -->
         <div v-for="survey in surveys" v-bind:key="survey.id" >
             <Survey :survey="survey"
             @itemchanged="$emit('itemchanged')"/>

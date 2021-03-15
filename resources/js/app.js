@@ -13,7 +13,6 @@ library.add(faPlusSquare, faTrash)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('Modal', require('./vue/ModalComponent.vue'));
-Vue.component('Modal2', require('./vue/Modal2.vue'));
 
 
 const app = new Vue({

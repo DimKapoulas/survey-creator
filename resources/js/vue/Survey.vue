@@ -65,7 +65,6 @@ export default {
         Question
     },
     // Object's local memory (scoped)
-
     data () {
     return{
             text: String,
@@ -79,11 +78,6 @@ export default {
             ],
         }
     },
-        // Runs on component's instance rendering
-    // mounted() {
-    //     this.getQuestions();
-    //     this.getAnswers(thisques_id);
-    // },   
     methods: {
         // Add more input fields
         add(index) {
@@ -136,9 +130,6 @@ export default {
 </script>
 
 <style scope>
-/* .fas {
-  color: red;
-} */
 .survey {
   background: #cac7c7;
   margin: 5px;
@@ -151,7 +142,6 @@ export default {
 .survey h3 {
   display: flex;
   align-items: right;
-  /* justify-content: space-around; */
 }
 .button {
     color: #4661b8;
