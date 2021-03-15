@@ -83,7 +83,7 @@ export default {
     // mounted() {
     //     this.getQuestions();
     //     this.getAnswers(thisques_id);
-    // },
+    // },   
     methods: {
         // Add more input fields
         add(index) {

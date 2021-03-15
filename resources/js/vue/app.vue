@@ -4,7 +4,7 @@
     title="Survey Creator" :addSurveyText="showAddSurvey"/>
     <!-- Toggle-able Add New Survey form -->
     <div v-if="showAddSurvey">
-      <Add-Survey />
+      <Add-Survey  @submit="storeSurvey"/>
     </div>
     <List-Surveys :surveys="surveys"
     @itemchanged="getSurveys()"/>
@@ -43,6 +43,27 @@ export default {
                 console.log( error );
             })
             
+        },
+        async storeSurvey(survey) {
+
+            console.log("From inside App: ", survey)
+            // Post request for survey creation
+            let survey_res = await axios.post('/api/questionnaires/store', {
+                title: this.new_title
+            })
+            console.log("New survey id is: ")
+            let survey_id = survey_res.data.data.id
+
+            // // Store each question for this survey
+            // survey.forEach(async function(entry) {
+            //     console.log("Survey_question: ", entry.question );
+            //     // For of these questions related answers
+            //     entry.answers.forEach(function(answer){
+            //         // Parse Observer object into a string
+            //     let parsedAnswer = JSON.parse(JSON.stringify(answer))
+            //         console.log("This question answers are:", parsedAnswer)
+            //     })
+            // })
         },
         toggleAddSurvey() {
           this.showAddSurvey = !this.showAddSurvey

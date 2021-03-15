@@ -80,7 +80,7 @@ export default {
     methods: {
         // Add more input fields
         add(index) {
-            this.inputs.push({ name: ''});
+            this.inputs.push({});
         },
         // Remove input fields
         remove(index) {
@@ -101,7 +101,7 @@ export default {
         editQuestion() {
             axios.put('api/questionnaires/' + this.question.questionnaire_id + '/questions/' + this.question.id,
             {
-                question: this.edit_question
+                "question": this.edit_question
             })
             .then( response => {
                 if( response.status == 200 ) {

@@ -17,9 +17,9 @@ class QuestionnaireController extends Controller
         // Init response array
         $data = [];
 
-        // Get all surveys and for each one of them
-        foreach(Questionnaire::all() as  $questionnaire) {
-            // Fetch its questions
+        // Get all surveys from most recent
+        foreach(Questionnaire::orderBy('id','DESC')->get() as  $questionnaire) {
+            // For each one of them fetch its questions
             $questions = $questionnaire->questions();
             // Pair them with their related answers
             $question_answer_pair = $questions->with('answers')->get();
