@@ -22,8 +22,8 @@ class QuestionController extends Controller
     }
     // Upon survey creation, save questions and its related answers
     public function bulk(Questionnaire $questionnaire) {
-        /* This roughly a hard coded work around to deal with
-            a serious bug created in the front end. In essence
+        /* This awork around to deal with
+            a bug created in the front end, when saving a survey. In essence
             I utilized eloquent methods in an unwrapped manner */
             
         $body =request()->getContent();
