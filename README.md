@@ -18,6 +18,9 @@ The following versions of software/packages where used:
 PHP 8.0.3 (cli)
 ```
 ```
+Composer version 2.0.11
+```
+```
 Laravel Framework 8.31.0
 ```
 ```
@@ -36,6 +39,7 @@ To render and serve our frontend, run:
 ``` npm install vue ``` then ``` npm run dev ```.  
 If prompted to run the mix again, just run ``` npm run dev ``` for a second time.
 
+Run ``` composer update ``` this patches our packages so we can run laravel framework  
 Now for our backend set up, run:  
 ``` php artisan migrate ``` to create our tables.  
 After that, ``` php artisan db:seed --class=SurveySeeder ``` to provide us dummy data  
