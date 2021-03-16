@@ -13,7 +13,7 @@
 
 This is a simple project of an SPA application showcasing basic CRUD functionality. Most attention was given in implementing the backend API in Laravel while the frontend is a basic template in Vue serving as an interface for cheking the API
 
-The following versions of software/packages where used:
+The following versions of software/packages where used, make sure you have them on your set up:
 ```
 PHP 8.0.3 (cli)
 ```
@@ -22,6 +22,9 @@ Composer version 2.0.11
 ```
 ```
 Laravel Framework 8.31.0
+```
+```
+npm 7.6.1
 ```
 ```
 Vue 2.6.12
