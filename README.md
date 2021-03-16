@@ -30,15 +30,15 @@ mysql  Ver 8.0.23
 
 ## Set up
 With the ```setUp.sql``` file, located at root directory,
-Run ``` sudo mysql < setUp.sql ```. This setUps a database and a test user for our application.
+Run ``` sudo mysql < setUp.sql ```. This sets up a database and a test user for our application.
 
-To render and serve our frontend run:
-``` npm install vue ``` then ``` npm run dev ```.
+To render and serve our frontend, run:  
+``` npm install vue ``` then ``` npm run dev ```.  
 If prompted to run the mix again, just run ``` npm run dev ``` for a second time.
 
-Now for our backend set up run:
-``` php artisan migrate ``` to create our tables.
-After that, ``` php artisan db:seed --class=SurveySeeder ``` to provide us dummy data
+Now for our backend set up, run:  
+``` php artisan migrate ``` to create our tables.  
+After that, ``` php artisan db:seed --class=SurveySeeder ``` to provide us dummy data  
 Finally start our server with ``` php artisan serve ```
 
 Our application is now running on localhost, navigate there and you can use it.
